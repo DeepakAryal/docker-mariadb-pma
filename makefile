@@ -15,7 +15,6 @@ export:
 		${PROJECT} > mariadb/fixtures/${PROJECT}.sql
 	docker exec -it ${PROJECT}-mariadb mysqldump \
 		-u${PROJECT} -p${PROJECT} --no-create-info \
-		# --ignore-table ...
 		-c ${PROJECT} | awk '{gsub(/\),/, "&\n")}1' | awk '{gsub(/ VALUES /, " VALUES\n")}1' \
 		>> mariadb/fixtures/${PROJECT}.sql
 	gzip -k fixtures/${PROJECT}.sql

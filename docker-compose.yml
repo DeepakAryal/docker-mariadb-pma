@@ -30,7 +30,7 @@ services:
     ports:
       - ${MARIADB_PORT}:3306
     volumes:
-      - ./mariadb/conf.d/character_set.cnf:/etc/mysql/conf.d/character-set.cnf
+      - ./mariadb/etc/mysql/conf.d/character_set.cnf:/etc/mysql/conf.d/character-set.cnf
       - ./mariadb/fixtures:/docker-entrypoint-initdb.d
       - mariadb-data:/var/lib/mysql
 
