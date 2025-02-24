@@ -20,10 +20,10 @@ services:
     container_name: ${PROJECT}-mariadb
     env_file: .env
     environment:
-      MARIADB_DATABASE: ${PROJECT}
-      MARIADB_PASSWORD: ${PROJECT}
-      MARIADB_ROOT_PASSWORD: ${PROJECT}
-      MARIADB_USER: ${PROJECT}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_USER: ${MARIADB_USER}
     image: mariadb:${MARIADB_VERSION-10.11}
     networks:
       - services
