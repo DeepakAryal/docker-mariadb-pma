@@ -1,0 +1,30 @@
+networks:
+  services:
+   driver: bridge
+   name: database
+
+services:
+
+  pma:
+     image: phpmyadmin/phpmyadmin:latest
+     container_name: pma
+     environment: 
+      PMA_HOST: mariadb
+     networks:
+      - services 
+     ports: 
+      - "50105:80"
+
+    
+  mariadb:
+    build:
+      context: ./mariadb
+      dockerfile: Dockerfile
+    container_name: mariadb
+    env_file:
+      - .env
+    image: database/test-db:local
+    networks:
+      - services
+    ports:
+      - 50106:3306
