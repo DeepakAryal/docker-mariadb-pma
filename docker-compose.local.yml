@@ -1,21 +1,21 @@
 networks:
   services:
    driver: bridge
-   name: database
-
+   name: ${PROJECT}
 services:
-
   pma:
-     image: phpmyadmin/phpmyadmin:latest
-     container_name: pma
+     container_name: ${PROJECT_PMA}
+     depends_on:
+      - mariadb
      environment: 
+      PMA_ABSOLUTE_URI: http://localhost:${PMA_PORT}
       PMA_HOST: mariadb
+     image: phpmyadmin/phpmyadmin:${PMA_VERSION-latest}
      networks:
       - services 
      ports: 
       - "50105:80"
 
-    
   mariadb:
     build:
       context: ./mariadb
