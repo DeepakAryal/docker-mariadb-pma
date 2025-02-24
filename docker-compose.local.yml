@@ -14,7 +14,7 @@ services:
      networks:
       - services 
      ports: 
-      - "50105:80"
+      - ${PMA_PORT}:80
 
   mariadb:
     build:
