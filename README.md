@@ -18,6 +18,11 @@ make start
 
 This will create a docker container for phpmyadmin and mariadb
 
+### See running containers
+```bash
+docker ps
+```
+
 ### Stop container
 ```bash
 make stop
