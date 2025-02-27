@@ -2,6 +2,7 @@ networks:
   services:
    driver: bridge
    name: ${PROJECT}
+
 services:
   pma:
      container_name: ${PROJECT}-pma
@@ -10,9 +11,9 @@ services:
      environment: 
       PMA_ABSOLUTE_URI: http://localhost:${PMA_PORT}
       PMA_HOST: mariadb
-     image: phpmyadmin/phpmyadmin:${PMA_VERSION-latest}
+     image: phpmyadmin/phpmyadmin:${PMA_VERSION:-latest}
      networks:
-      - services 
+      - services
      ports: 
       - ${PMA_PORT}:80
 
@@ -24,7 +25,7 @@ services:
       MARIADB_PASSWORD: ${MARIADB_PASSWORD:-${PROJECT}}
       MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:-${PROJECT}}
       MARIADB_USER: ${MARIADB_USER:-${PROJECT}}
-    image: mariadb:${MARIADB_VERSION-10.11}
+    image: mariadb:${MARIADB_VERSION:-10.11}
     networks:
       - services
     ports:
@@ -37,4 +38,5 @@ services:
 volumes:
   mariadb-data:
     driver: local
+
   
