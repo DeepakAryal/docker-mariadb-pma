@@ -8,18 +8,20 @@ clean: stop
 
 export:
 	@printf "\033[0;32m>>> Dumping MariaDB database\033[0m\n"
-	@if [ -z "${PROJECT}" ]; then echo "Error: PROJECT variable not set"; exit 1; fi
-	docker exec -it ${PROJECT}-mariadb mysqldump \
-		-u${PROJECT} \
-		-p${PROJECT} \
+	@if [ -z "$${PROJECT}" ]; then echo "Error: PROJECT variable not set"; exit 1; fi
+	docker exec -it $${PROJECT}-mariadb mysqldump \
+		--user=$${MARIADB_USER:-$${PROJECT}} \
+		--password=$${MARIADB_PASSWORD:-$${PROJECT}} \
 		--no-data \
-		${PROJECT} > mariadb/fixtures/${PROJECT}.sql
-	docker exec -it ${PROJECT}-mariadb mysqldump \
-		-u${PROJECT} -p${PROJECT} --no-create-info \
-		-c ${PROJECT} | awk '{gsub(/\),/, "&\n")}1' | awk '{gsub(/ VALUES /, " VALUES\n")}1' \
-		>> mariadb/fixtures/${PROJECT}.sql
-	gzip -k mariadb/fixtures/${PROJECT}.sql
-	rm mariadb/fixtures/${PROJECT}.sql
+		$${MARIADB_DATABASE:-$${PROJECT}} > mariadb/fixtures/$${MARIADB_DATABASE:-$${PROJECT}}.sql
+	docker exec -it $${PROJECT}-mariadb mysqldump \
+		--user=$${MARIADB_USER:-$${PROJECT}} \
+		--password=$${MARIADB_PASSWORD:-$${PROJECT}} \
+		--no-create-info \
+		$${MARIADB_DATABASE:-$${PROJECT}} | awk '{gsub(/\),/, "&\n")}1' | awk '{gsub(/ VALUES /, " VALUES\n")}1' \
+		>> mariadb/fixtures/$${MARIADB_DATABASE:-$${PROJECT}}.sql
+	gzip -k mariadb/fixtures/$${MARIADB_DATABASE:-$${PROJECT}}.sql
+	rm mariadb/fixtures/$${MARIADB_DATABASE:-$${PROJECT}}.sql
 
 start:
 	@printf "\033[0;32m>>> Starting local services\033[0m\n"

@@ -3,3 +3,4 @@
 .idea/
 !.env.example
 **/*.sql
+.DS_Store
