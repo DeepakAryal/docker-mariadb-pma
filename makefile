@@ -8,6 +8,7 @@ clean: stop
 
 export:
 	@printf "\033[0;32m>>> Dumping MariaDB database\033[0m\n"
+	@if [ -z "${PROJECT}" ]; then echo "Error: PROJECT variable not set"; exit 1; fi
 	docker exec -it ${PROJECT}-mariadb mysqldump \
 		-u${PROJECT} \
 		-p${PROJECT} \
@@ -17,8 +18,8 @@ export:
 		-u${PROJECT} -p${PROJECT} --no-create-info \
 		-c ${PROJECT} | awk '{gsub(/\),/, "&\n")}1' | awk '{gsub(/ VALUES /, " VALUES\n")}1' \
 		>> mariadb/fixtures/${PROJECT}.sql
-	gzip -k fixtures/${PROJECT}.sql
-	rm fixtures/mariadb/${PROJECT}.sql
+	gzip -k mariadb/fixtures/${PROJECT}.sql
+	rm mariadb/fixtures/${PROJECT}.sql
 
 start:
 	@printf "\033[0;32m>>> Starting local services\033[0m\n"
