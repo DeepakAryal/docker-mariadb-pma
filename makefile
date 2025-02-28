@@ -21,10 +21,6 @@ export:
 	gzip -k mariadb/fixtures/${PROJECT}.sql
 	rm mariadb/fixtures/${PROJECT}.sql
 
-# image:
-# 	@printf "\033[0;32m>>> Building mariadb database server image\033[0m\n"
-# 	docker build -t database/test-db:local ./mariadb
-
 start:
 	@printf "\033[0;32m>>> Starting local services\033[0m\n"
 	docker compose -p ${PROJECT} up -d
